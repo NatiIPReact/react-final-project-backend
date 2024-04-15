@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\Visual Studio Projects\Ruppin Year B\ServerSide\Git\Songs\Server\FinalProject\FinalProject\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2023-07-24T21:02:17.8712367Z;True|2023-07-24T19:44:12.5257453+02:00;True|2023-07-24T14:14:26.9057214+02:00;True|2023-07-24T14:14:19.7747818+02:00;True|2023-07-24T11:28:28.4738556+02:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

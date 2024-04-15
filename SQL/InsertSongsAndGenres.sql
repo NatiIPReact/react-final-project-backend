@@ -1,0 +1,14 @@
+select * from Proj_Songs
+--insert into Proj_Genre(GenreName) values ('Christmas')
+--insert into Proj_Genre(GenreName) values ('Hip Hop')
+--insert into Proj_Genre(GenreName) values ('Pop Rock')
+--insert into Proj_Genre(GenreName) values ('Ballad')
+--insert into Proj_Genre(GenreName) values ('Disco')
+--insert into Proj_Genre(GenreName) values ('Electronic')
+--insert into Proj_Genre(GenreName) values ('Electropop')
+--insert into Proj_Genre(GenreName) values ('Psychedelia')
+--insert into Proj_Genre(GenreName) values ('Rock')
+--insert into Proj_Genre(GenreName) values ('Funk')
+--insert into Proj_Genre(GenreName) values ('Folk')
+--select * from Proj_Genre
+--exec Proj_ReadSongByID 40

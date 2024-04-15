@@ -1,0 +1,5 @@
+CREATE TABLE AudioFiles (
+  FileID INT IDENTITY(1,1) PRIMARY KEY,
+  FileName NVARCHAR(100),
+  FileData VARBINARY(MAX)
+);
