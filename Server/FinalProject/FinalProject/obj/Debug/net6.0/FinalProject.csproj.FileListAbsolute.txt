@@ -116,3 +116,4 @@ C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\ne
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.pdb
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.genruntimeconfig.cache
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\ref\FinalProject.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.sourcelink.json

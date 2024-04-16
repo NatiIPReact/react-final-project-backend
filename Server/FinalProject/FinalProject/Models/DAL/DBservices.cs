@@ -941,7 +941,8 @@ public class DBservices
                     PerformerName = PName,
                     PerformerImage = PImage,
                     PerformerID = PID,
-                    GenreName = GName
+                    GenreName = GName,
+                    IsInFav = 1
                 };
                 favorites.Add(res);
             }
