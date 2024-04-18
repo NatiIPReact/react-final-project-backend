@@ -20,6 +20,7 @@ namespace FinalProject.Models
         private bool isVerified;
         private DateTime registrationDate;
         private bool isBanned;
+        private string image;
 
         public User(int id, string email, string name, string password, bool isVerified, DateTime registrationDate)
         {
@@ -31,7 +32,7 @@ namespace FinalProject.Models
             RegistrationDate = registrationDate;
         }
 
-        public User(int id, string email, string name, string password, bool isVerified, DateTime registrationDate, bool ib)
+        public User(int id, string email, string name, string password, bool isVerified, DateTime registrationDate, bool ib, string image)
         {
             Id = id;
             Email = email;
@@ -40,6 +41,7 @@ namespace FinalProject.Models
             IsVerified = isVerified;
             RegistrationDate = registrationDate;
             IsBanned = ib;
+            Image = image;
         }
 
         public User()
@@ -54,6 +56,7 @@ namespace FinalProject.Models
         public bool IsVerified { get => isVerified; set => isVerified = value; }
         public DateTime RegistrationDate { get => registrationDate; set => registrationDate = value; }
         public bool IsBanned { get => isBanned; set => isBanned = value; }
+        public string Image { get => image; set => image = value; }
 
         // Used for user login
         public static User Login(string email, string password)

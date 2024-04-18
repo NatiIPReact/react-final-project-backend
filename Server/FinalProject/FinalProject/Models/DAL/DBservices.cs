@@ -67,10 +67,11 @@ public class DBservices
         paramDic.Add("@UserPassword", u.Password);
         paramDic.Add("@isNewEmail", isNewEmail ? 1 : 0);
         paramDic.Add("@token", token);
+        if (u.Image != null) paramDic.Add("@image", Convert.FromBase64String(u.Image));
 
 
 
-        cmd = CreateCommandWithStoredProcedure("Proj_SP_UpdateUser", con, paramDic);             // create the command
+        cmd = CreateCommandWithStoredProcedure(u.Image == null ? "Proj_SP_UpdateUser" : "Proj_SP_UpdateUserImage", con, paramDic);             // create the command
 
         try
         {
@@ -3260,6 +3261,7 @@ public class DBservices
                 u.Id = Convert.ToInt32(dataReader["UserID"]);
                 u.IsBanned = Convert.ToInt32(dataReader["IsBanned"]) == 1;
                 u.RegistrationDate = Convert.ToDateTime(dataReader["registrationDate"]);
+                u.Image = Convert.ToBase64String(((byte[])dataReader["Image"]));
                 return u;
             }
             throw new Exception("Server error");
