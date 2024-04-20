@@ -79,6 +79,21 @@ namespace FinalProject.Models
                 throw new Exception("Error");
             return user;
         }
+        public static List<object> GetExpoTokens()
+        {
+            DBservices db = new DBservices();
+            return db.GetExpoTokens();
+        }
+        public static bool UpdateUserExpoToken(int UserID, string NewExpoToken)
+        {
+            DBservices db = new DBservices();
+            return db.UpdateExpoToken(UserID, NewExpoToken) > 0;
+        }
+        public static User GetUserByEmail(string email)
+        {
+            DBservices db = new DBservices();
+            return db.GetUserByEmail(email);
+        }
 
         // Inserts a new user into the user table. Initiates email verification.
         public bool Insert()
@@ -274,14 +289,14 @@ namespace FinalProject.Models
             return db.GetNumberOfLikedSongs(UserID);
         }
         // Posts a new song to user favorites
-        public static bool PostUserFavorite(int UserID, int SongID)
+        public static object PostUserFavorite(int UserID, int SongID)
         {
             if (UserID < 1)
                 throw new ArgumentException("User doesn't exist");
             if (SongID < 1)
                 throw new ArgumentException("Song doesn't exist");
             DBservices db = new DBservices();
-            return db.PostUserFavorite(UserID, SongID) > 0;
+            return db.PostUserFavorite(UserID, SongID);
         }
         // Deletes a song from user favorites.
         public static bool DeleteFromFavorite(int UserID, int SongID)

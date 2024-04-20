@@ -94,6 +94,51 @@ public class DBservices
         }
 
     }
+    public int UpdateExpoToken(int UserID, string NewExpoToken)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+        paramDic.Add("@ExpoToken", NewExpoToken);
+
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_StoreExpoToken", con, paramDic);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
     // Used for admins to ban users
     public int BanUser(int UserID)
     {
@@ -704,6 +749,59 @@ public class DBservices
                 int InFav = Convert.ToInt32(dataReader["InFav"]);
                 object s = new { SongID = SongID, SongName = SName, PerformerName = PName, PerformerID = PerformerID,
                 PerformerImage = PImage, NumOfPlays = NumOfPlays, GenreName = GName, SongLength = SLength, IsInFav = InFav };
+                songs.Add(s);
+            }
+
+            return songs;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    public List<object> GetExpoTokens()
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetExpoTokens", con, null);             // create the command
+
+
+        List<object> songs = new List<object>();
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                string ExpoToken = dataReader["ExpoToken"].ToString();
+                object s = new
+                {
+                    ExpoToken = ExpoToken
+                };
                 songs.Add(s);
             }
 
@@ -2829,7 +2927,7 @@ public class DBservices
 
     }
     // Adds a new song to this user's favorites.
-    public int PostUserFavorite(int UserID, int SongID)
+    public object PostUserFavorite(int UserID, int SongID)
     {
 
         SqlConnection con;
@@ -2845,6 +2943,8 @@ public class DBservices
             throw (ex);
         }
 
+        SqlCommand cmdRead;
+
         Dictionary<string, object> paramDic = new Dictionary<string, object>();
         paramDic.Add("@UserID", UserID);
         paramDic.Add("@SongID", SongID);
@@ -2852,9 +2952,29 @@ public class DBservices
 
         cmd = CreateCommandWithStoredProcedure("Proj_SP_PostUserFavorite", con, paramDic);             // create the command
 
+        Dictionary<string, object> paramDicRead = new Dictionary<string, object>();
+        paramDicRead.Add("@SongID", SongID);
+        cmdRead = CreateCommandWithStoredProcedure("Proj_SP_GetSongDataByID", con, paramDicRead);
+
         try
         {
             int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            SqlDataReader dataReader = cmdRead.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dataReader.Read())
+            {
+                object res = new
+                {
+                    GenreName = dataReader["GenreName"].ToString(),
+                    SongLength = dataReader["SongLength"].ToString(),
+                    PerformerID = Convert.ToInt32(dataReader["PerformerID"]),
+                    PerformerImage = dataReader["PerformerImage"].ToString(),
+                    PerformerName = dataReader["PerformerName"].ToString(),
+                    SongID = Convert.ToInt32(dataReader["SongID"]),
+                    SongName = dataReader["SongName"].ToString(),
+                    IsInFav = 1
+                };
+                return res;
+            }
             // int numEffected = Convert.ToInt32(cmd.ExecuteScalar()); // returning the id
             return numEffected;
         }
@@ -3222,6 +3342,71 @@ public class DBservices
         }
 
     }
+    public User GetUserByEmail(string email)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@email", email);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserByEmail", con, paramDic);             // create the command
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                User u = new User();
+                u.Email = dataReader["UserEmail"].ToString();
+                u.Password = dataReader["UserPassword"].ToString();
+                u.Name = dataReader["UserName"].ToString();
+                u.Id = Convert.ToInt32(dataReader["UserID"]);
+                u.IsBanned = Convert.ToInt32(dataReader["IsBanned"]) == 1;
+                u.IsVerified = Convert.ToInt32(dataReader["UserIsVerified"]) == 1;
+                u.RegistrationDate = Convert.ToDateTime(dataReader["registrationDate"]);
+                if (!dataReader.IsDBNull(dataReader.GetOrdinal("Image")))
+                {
+                    u.Image = Convert.ToBase64String((byte[])dataReader["Image"]);
+                }
+                else
+                {
+                    u.Image = null;
+                }
+                return u;
+            }
+            throw new ArgumentException("User doesn't exist");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
     // User login
     public User Login(string email, string password)
     {
@@ -3260,8 +3445,16 @@ public class DBservices
                 u.Name = dataReader["UserName"].ToString();
                 u.Id = Convert.ToInt32(dataReader["UserID"]);
                 u.IsBanned = Convert.ToInt32(dataReader["IsBanned"]) == 1;
+                u.IsVerified = Convert.ToInt32(dataReader["UserIsVerified"]) == 1;
                 u.RegistrationDate = Convert.ToDateTime(dataReader["registrationDate"]);
-                u.Image = Convert.ToBase64String(((byte[])dataReader["Image"]));
+                if (!dataReader.IsDBNull(dataReader.GetOrdinal("Image")))
+                {
+                    u.Image = Convert.ToBase64String((byte[])dataReader["Image"]);
+                }
+                else
+                {
+                    u.Image = null;
+                }
                 return u;
             }
             throw new Exception("Server error");
@@ -3864,6 +4057,14 @@ public class DBservices
                 c.Content = dataReader["CommentContent"].ToString();
                 c.UserName = dataReader["UserName"].ToString();
                 c.Date = Convert.ToDateTime(dataReader["CommentDate"]);
+                if (!dataReader.IsDBNull(dataReader.GetOrdinal("Image")))
+                {
+                    c.UserImage = Convert.ToBase64String((byte[])dataReader["Image"]);
+                }
+                else
+                {
+                    c.UserImage = null;
+                }
                 commentsList.Add(c);
             }
             return commentsList;

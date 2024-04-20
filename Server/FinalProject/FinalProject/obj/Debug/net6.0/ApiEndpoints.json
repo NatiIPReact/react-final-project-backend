@@ -1411,6 +1411,16 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetExpoTokens",
+    "RelativePath": "api/Users/GetExpoTokens",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetLeaderboard",
     "RelativePath": "api/Users/GetLeaderboard",
     "HttpMethod": "GET",
@@ -1430,6 +1440,22 @@
       {
         "Name": "UserID",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetUserByEmail",
+    "RelativePath": "api/Users/GetUserByEmail/email/{email}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -1637,6 +1663,27 @@
         "Name": "oldEmail",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "UpdateUserExpoToken",
+    "RelativePath": "api/Users/UpdateUserExpoToken/UserID/{UserID}/ExpoToken/{ExpoToken}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "ExpoToken",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

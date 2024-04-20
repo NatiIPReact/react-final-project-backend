@@ -126,7 +126,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = "Server error " + e.Message });
             }
         }
-
+        [HttpGet("GetExpoTokens")]
+        public IActionResult GetExpoTokens()
+        {
+            try
+            {
+                return Ok(Models.User.GetExpoTokens());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
+            }
+        }
         // POST api/<UsersController>
         [HttpPost]
         // Posts a new user into the user table - Register
@@ -154,6 +165,18 @@ namespace FinalProject.Controllers
             catch (Exception e)
             {
                 return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpGet("GetUserByEmail/email/{email}")]
+        public IActionResult GetUserByEmail(string email)
+        {
+            try
+            {
+                return Ok(Models.User.GetUserByEmail(email));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
             }
         }
         // Adds a song to user favorites.
@@ -230,6 +253,18 @@ namespace FinalProject.Controllers
             {
                 if (e.Message.Contains("UNIQUE KEY constraint"))
                     return BadRequest(new { message = "This email is already taken" });
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpPut("UpdateUserExpoToken/UserID/{UserID}/ExpoToken/{ExpoToken}")]
+        public IActionResult UpdateUserExpoToken(int UserID, string ExpoToken)
+        {
+            try
+            {
+                return Models.User.UpdateUserExpoToken(UserID, ExpoToken) ? Ok(new { message = "Updated" }) : BadRequest(new { message = "Server error, please try again later" });
+            }
+            catch (Exception e)
+            {
                 return BadRequest(new { message = e.Message });
             }
         }

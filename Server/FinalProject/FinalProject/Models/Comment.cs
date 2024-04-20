@@ -8,6 +8,7 @@
         private string content;
         private DateTime date;
         private string userName;
+        private string userImage;
 
         public Comment(int commentID, int userID, int performerID, string content)
         {
@@ -30,6 +31,16 @@
             Date = date;
             UserName = userName;
         }
+        public Comment(int commentID, int userID, int performerID, string content, DateTime date, string userName, string userImage)
+        {
+            CommentID = commentID;
+            UserID = userID;
+            PerformerID = performerID;
+            Content = content;
+            Date = date;
+            UserName = userName;
+            UserImage = userImage;
+        }
 
         public int CommentID { get => commentID; set => commentID = value; }
         public int UserID { get => userID; set => userID = value; }
@@ -37,6 +48,8 @@
         public string Content { get => content; set => content = value; }
         public DateTime Date { get => date; set => date = value; }
         public string UserName { get => userName; set => userName = value; }
+        public string UserImage { get => userImage; set => userImage = value; }
+
         // Inserts a comment to our db
         public bool Insert()
         {
