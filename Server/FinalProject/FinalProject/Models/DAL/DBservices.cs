@@ -2962,10 +2962,15 @@ public class DBservices
             SqlDataReader dataReader = cmdRead.ExecuteReader(CommandBehavior.CloseConnection);
             while (dataReader.Read())
             {
+                string sLength = dataReader["SongLength"].ToString();
+                if (sLength.Contains(' '))
+                {
+                    sLength = sLength.Replace(" ", "");
+                }
                 object res = new
                 {
                     GenreName = dataReader["GenreName"].ToString(),
-                    SongLength = dataReader["SongLength"].ToString(),
+                    length = sLength,
                     PerformerID = Convert.ToInt32(dataReader["PerformerID"]),
                     PerformerImage = dataReader["PerformerImage"].ToString(),
                     PerformerName = dataReader["PerformerName"].ToString(),

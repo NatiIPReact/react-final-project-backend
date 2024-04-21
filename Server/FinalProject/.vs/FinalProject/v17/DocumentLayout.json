@@ -38,8 +38,7 @@
               "RelativeToolTip": "FinalProject\\Models\\Comment.cs",
               "ViewState": "AQIAADgAAAAAAAAAAADwv0MAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-20T11:18:03.857Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-20T11:18:03.857Z"
             },
             {
               "$type": "Document",
@@ -51,8 +50,7 @@
               "RelativeToolTip": "FinalProject\\Controllers\\UsersController.cs",
               "ViewState": "AQIAAKwAAAAAAAAAAAAuwLsAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T15:31:24.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-18T15:31:24.592Z"
             },
             {
               "$type": "Document",
@@ -64,8 +62,7 @@
               "RelativeToolTip": "FinalProject\\Models\\User.cs",
               "ViewState": "AQIAAB4BAAAAAAAAAAAawCoBAAAmAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T14:17:10.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-18T14:17:10.858Z"
             },
             {
               "$type": "Document",
@@ -75,7 +72,7 @@
               "RelativeDocumentMoniker": "FinalProject\\Models\\DAL\\DBservices.cs",
               "ToolTip": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Models\\DAL\\DBservices.cs",
               "RelativeToolTip": "FinalProject\\Models\\DAL\\DBservices.cs",
-              "ViewState": "AQIAANMGAAAAAAAAAAAlwN8GAAA0AAAA",
+              "ViewState": "AQIAAGsLAAAAAAAAAAAlwHELAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-05T16:33:29.393Z",
               "EditorCaption": ""
