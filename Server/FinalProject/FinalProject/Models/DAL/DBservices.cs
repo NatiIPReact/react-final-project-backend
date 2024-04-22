@@ -1977,7 +1977,9 @@ public class DBservices
                     SoloAverage = SQA == 0 ? 0.0f : (QGR / (float)SQA) * 100,
                     test1 = QGR,
                     test2 = SQA,
-                    Level = Math.Floor(XP / 100.0f) + 1
+                    Level = Math.Floor(XP / 100.0f) + 1,
+                    image = !dataReader.IsDBNull(dataReader.GetOrdinal("Image")) ? Convert.ToBase64String((byte[])dataReader["Image"]) : null,
+                    UserID = Convert.ToInt32(dataReader["UserID"])
                 };
                 users.Add(s);
             }
