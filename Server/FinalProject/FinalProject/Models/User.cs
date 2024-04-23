@@ -8,6 +8,9 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Twilio;
+using Twilio.Rest.Verify.V2.Service;
+using System.Numerics;
 
 namespace FinalProject.Models
 {
@@ -94,6 +97,11 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetUserByEmail(email);
         }
+        public static User GetUserByPhone(string phone)
+        {
+            DBservices db = new DBservices();
+            return db.GetUserByPhone(phone);
+        }
 
         // Inserts a new user into the user table. Initiates email verification.
         public bool Insert()
@@ -120,10 +128,24 @@ namespace FinalProject.Models
             bool isNewEmail = email != oldEmail;
             string Token = isNewEmail ? GenerateToken() : "";
             bool tmp = db.Update(this, isNewEmail, Token) > 0;
-            // email verification - turn the comment off when ready
-            //if (isNewEmail)
-                //Execute(Token).Wait();
+            if (isNewEmail)
+                Execute(Token).Wait();
             return tmp;
+        }
+        public static VerificationResource.StatusEnum SendCode(int UserID)
+        {
+            DBservices db = new DBservices();
+            return db.SendCode(UserID);
+        }
+        public static bool UpdateUserPhoneNumber(int UserID, string PhoneNumber)
+        {
+            DBservices db = new DBservices();
+            return db.PutUserPhone(UserID, PhoneNumber) > 0;
+        }
+        public static object GetUserPhoneNumber(int UserID)
+        {
+            DBservices db = new DBservices();
+            return db.GetUserPhoneNumber(UserID);
         }
         // Returns user's following list. (performers he follows)
         public static List<Performer> GetFollowingList(int UserID)
@@ -390,6 +412,18 @@ namespace FinalProject.Models
                 throw new ArgumentException("User doesn't exist");
             DBservices db = new DBservices();
             return db.UnbanUser(UserID) > 0;
+        }
+
+        public static object PhoneLogin(string phone)
+        {
+            DBservices db = new DBservices();
+            return db.PhoneLogin(phone);
+        }
+
+        public static object VerifyCode(string phone, string code)
+        {
+            DBservices db = new DBservices();
+            return db.VerifyCode(phone, code);
         }
     }
 }

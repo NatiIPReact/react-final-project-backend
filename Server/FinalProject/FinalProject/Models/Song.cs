@@ -101,6 +101,11 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetTop15(UserID);
         }
+        public static List<SongRecommendation> GetUserRecommendations(int UserID)
+        {
+            DBservices db = new DBservices();
+            return db.GetUserRecommendedSongs(UserID);
+        }
         // Gets the songs of a specific performer by its id
         public static List<object> GetPerformerSongs(int PID, int UserID)
         {

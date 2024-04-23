@@ -167,12 +167,68 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPost("SendCode/UserID/{UserID}")]
+        public IActionResult SendCode(int UserID)
+        {
+            try
+            {
+                return Ok(Models.User.SendCode(UserID));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpPost("PhoneLogin/Phone/{Phone}")]
+        public IActionResult PhoneLogin(string Phone)
+        {
+            try
+            {
+                if (!Phone.Contains('+'))
+                    Phone = "+" + Phone;
+                return Ok(Models.User.PhoneLogin(Phone));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpGet("VerifyCode/Phone/{Phone}/Code/{Code}")]
+        public IActionResult VerifyCode(string Phone, string Code)
+        {
+            try
+            {
+                if (!Phone.Contains('+'))
+                    Phone = "+" + Phone;
+                return Ok(Models.User.VerifyCode(Phone, Code));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
         [HttpGet("GetUserByEmail/email/{email}")]
         public IActionResult GetUserByEmail(string email)
         {
             try
             {
                 return Ok(Models.User.GetUserByEmail(email));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
+            }
+        }
+        [HttpGet("GetUserByPhone/Phone/{Phone}")]
+        public IActionResult GetUserByPhone(string Phone)
+        {
+            try
+            {
+                if (!Phone.Contains("+"))
+                {
+                    Phone = "+" + Phone;
+                }
+                return Ok(Models.User.GetUserByPhone(Phone));
             }
             catch (Exception e)
             {
@@ -256,6 +312,24 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPut("UpdateUserPhone/UserID/{UserID}/Phone/{Phone}")]
+        public IActionResult Put(int UserID, string Phone)
+        {
+            try
+            {
+                if (Phone == "-1")
+                    return Ok(false);
+                if (!Phone.Contains('+'))
+                    Phone = "+" + Phone;
+                return Models.User.UpdateUserPhoneNumber(UserID, Phone) ? Ok(new { message = "Updated" }) : BadRequest(new { message = "Server error, please try again later" });
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("UNIQUE KEY constraint"))
+                    return BadRequest(new { message = "This phone is already taken" });
+                return BadRequest(new { message = e.Message });
+            }
+        }
         [HttpPut("UpdateUserExpoToken/UserID/{UserID}/ExpoToken/{ExpoToken}")]
         public IActionResult UpdateUserExpoToken(int UserID, string ExpoToken)
         {
@@ -314,6 +388,18 @@ namespace FinalProject.Controllers
             try
             {
                 return Ok(Models.User.GetLeaderboard());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "SERVER ERROR " + e.Message });
+            }
+        }
+        [HttpGet("GetUserPhoneNumber/UserID/{UserID}")]
+        public IActionResult GetUserPhoneNumber(int UserID)
+        {
+            try
+            {
+                return Ok(Models.User.GetUserPhoneNumber(UserID));
             }
             catch (Exception e)
             {

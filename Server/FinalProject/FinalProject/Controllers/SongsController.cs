@@ -37,6 +37,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = "Server error " + e.Message });
             }
         }
+        [HttpGet("GetUserRecommendations/UserID/{UserID}")]
+        public IActionResult GetUserRecommendations(int UserID)
+        {
+            try
+            {
+                return Ok(Song.GetUserRecommendations(UserID));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
+            }
+        }
         // Initiates search by query string. UserID is required to know whteher the user has the songs on his favorites.
         // If not logged in, returns -1 and then we know he cannot favorite the songs. (Show popup instead to login first)
         [HttpGet("Search/query/{query}/UserID/{UserID}")]

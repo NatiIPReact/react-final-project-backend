@@ -1123,6 +1123,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.SongsController",
+    "Method": "GetUserRecommendations",
+    "RelativePath": "api/Songs/GetUserRecommendations/UserID/{UserID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.SongsController",
     "Method": "InsertFileDataToSongID",
     "RelativePath": "api/Songs/InsertSongHEXData",
     "HttpMethod": "POST",
@@ -1463,6 +1479,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetUserByPhone",
+    "RelativePath": "api/Users/GetUserByPhone/Phone/{Phone}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetUserFavorites",
     "RelativePath": "api/Users/GetUserFavorites/UserID/{UserID}",
     "HttpMethod": "GET",
@@ -1481,6 +1513,22 @@
     "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetUserFollowingList",
     "RelativePath": "api/Users/GetUserFollowingList/UserID/{UserID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetUserPhoneNumber",
+    "RelativePath": "api/Users/GetUserPhoneNumber/UserID/{UserID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1590,6 +1638,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "PhoneLogin",
+    "RelativePath": "api/Users/PhoneLogin/Phone/{Phone}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "PostUserFavorite",
     "RelativePath": "api/Users/PostUserFavorite/UserID/{UserID}/SongID/{SongID}",
     "HttpMethod": "POST",
@@ -1603,6 +1667,22 @@
       },
       {
         "Name": "SongID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "SendCode",
+    "RelativePath": "api/Users/SendCode/UserID/{UserID}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -1691,6 +1771,27 @@
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "Put",
+    "RelativePath": "api/Users/UpdateUserPhone/UserID/{UserID}/Phone/{Phone}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "Put",
     "RelativePath": "api/Users/ValidateEmail",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -1705,6 +1806,27 @@
         "Name": "token",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "VerifyCode",
+    "RelativePath": "api/Users/VerifyCode/Phone/{Phone}/Code/{Code}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Phone",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "Code",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

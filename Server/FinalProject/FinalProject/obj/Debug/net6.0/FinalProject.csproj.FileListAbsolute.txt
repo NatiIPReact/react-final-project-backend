@@ -117,3 +117,9 @@ C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\ne
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.genruntimeconfig.cache
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\ref\FinalProject.dll
 C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\obj\Debug\net6.0\FinalProject.sourcelink.json
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Debug\net6.0\Twilio.dll

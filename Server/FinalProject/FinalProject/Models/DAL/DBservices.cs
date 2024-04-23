@@ -14,6 +14,10 @@ using System.Collections;
 using System.Xml.Linq;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Components.Web;
+using FinalProject;
+using Twilio.Rest.Verify.V2.Service;
+using Twilio;
+using Twilio.TwiML.Voice;
 //using SendGrid;
 
 /// <summary>
@@ -67,11 +71,11 @@ public class DBservices
         paramDic.Add("@UserPassword", u.Password);
         paramDic.Add("@isNewEmail", isNewEmail ? 1 : 0);
         paramDic.Add("@token", token);
-        if (u.Image != null) paramDic.Add("@image", Convert.FromBase64String(u.Image));
+        if (u.Image != null && u.Image != "") paramDic.Add("@image", Convert.FromBase64String(u.Image));
 
 
 
-        cmd = CreateCommandWithStoredProcedure(u.Image == null ? "Proj_SP_UpdateUser" : "Proj_SP_UpdateUserImage", con, paramDic);             // create the command
+        cmd = CreateCommandWithStoredProcedure(u.Image != null && u.Image != "" ? "Proj_SP_UpdateUserImage" : "Proj_SP_UpdateUser", con, paramDic);             // create the command
 
         try
         {
@@ -770,6 +774,72 @@ public class DBservices
         }
 
     }
+    public List<SongRecommendation> GetUserRecommendedSongs(int UserID, int NumberOfSongs = 15)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUsersSongs", con, paramDic);             // create the command
+
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            RecommendationEngine engine = new RecommendationEngine();
+            while (dataReader.Read())
+            {
+                int SongID = Convert.ToInt32(dataReader["SongID"]);
+                int PerformerID = Convert.ToInt32(dataReader["PerformerID"]);
+                string SName = dataReader["SongName"].ToString();
+                string PName = dataReader["PerformerName"].ToString();
+                string PImage = dataReader["PerformerImage"].ToString();
+                int NumOfPlays = Convert.ToInt32(dataReader["NumOfPlays"]);
+                int ReleaseYear = Convert.ToInt32(dataReader["ReleaseYear"]);
+                string GName = dataReader["GenreName"].ToString();
+                string SLength = dataReader["SongLength"].ToString();
+                if (SLength != null && SLength.Contains(' '))
+                    SLength = SLength.Substring(0, SLength.IndexOf(' '));
+                int InFav = Convert.ToInt32(dataReader["InFav"]);
+                int FollowingArtist = Convert.ToInt32(dataReader["FollowingArtist"]);
+                int LikesGenre = Convert.ToInt32(dataReader["LikesGenre"]);
+                SongRecommendation s = new SongRecommendation(SongID, SName, NumOfPlays,
+                    PerformerID, ReleaseYear, InFav, FollowingArtist, LikesGenre, SLength,
+                    PName, PImage, GName);
+                engine.AddSong(s);
+            }
+            return engine.TurnonEngine(NumberOfSongs);
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
     public List<object> GetExpoTokens()
     {
 
@@ -1103,6 +1173,7 @@ public class DBservices
                 string PName = dataReader["PerformerName"].ToString();
                 string PImage = dataReader["PerformerImage"].ToString();
                 int PEID = Convert.ToInt32(dataReader["PerformerID"]);
+                int IsSongInFavorites = Convert.ToInt32(dataReader["InFav"]);
                 object res = new
                 {
                     SongID = SID,
@@ -1111,7 +1182,8 @@ public class DBservices
                     PerformerName = PName,
                     PerformerImage = PImage,
                     PerformerID = PEID,
-                    GenreName = dataReader["GenreName"].ToString()
+                    GenreName = dataReader["GenreName"].ToString(),
+                    IsInFav = IsSongInFavorites
                 };
                 playlistSongs.Add(res);
             }
@@ -1856,7 +1928,7 @@ public class DBservices
                     PerformerName = PName,
                     PerformerImage = PImage,
                     GenreName = GName,
-                    IsInFavorites = IsInFav,
+                    IsInFav = IsInFav,
                     SongFavorites = UF,
                     ArtistFavorites = AF
                 };
@@ -2419,7 +2491,7 @@ public class DBservices
                     PerformerImage = PImage,
                     SongName = SName,
                     SongLength = SLength,
-                    IsInFavorites = IsInFav,
+                    IsInFav = IsInFav,
                     SongTotalFavorites = favorites,
                     IsUserFollowingArtist = UserID < 1 ? -1 : Convert.ToInt32(dataReader["IsUserFollowingArtist"])
                 };
@@ -2725,6 +2797,51 @@ public class DBservices
         }
 
     }
+    public int PutUserPhone(int UserID, string PhoneNumber)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+        paramDic.Add("@PhoneNumber", PhoneNumber);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_UpdateUserPhoneNumber", con, paramDic);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            // int numEffected = Convert.ToInt32(cmd.ExecuteScalar()); // returning the id
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
     // Inserts the question to this quiz.
     public int Insert(Question q, int quizID)
     {
@@ -2861,6 +2978,188 @@ public class DBservices
                 object res = new
                 {
                     PlaylistID = Convert.ToInt32(dataReader["CurrentIdentity"])
+                };
+                return res;
+            }
+            throw new Exception("SERVER ERROR");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    public string SendCode(int UserID)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserPhone", con, paramDic);             // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                string Number = dataReader["PhoneNumber"].ToString();
+                if (!Number.Contains('-'))
+                {
+                    TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
+                    var varification = VerificationResource.Create(to: Number, channel: "sms", pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742");
+                    return "Sent!";
+                }
+            }
+            return "ERROR - Cannot send";
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+    public object PhoneLogin(string Phone)
+    {
+        if (DoesPhoneExist(Phone))
+        {
+            TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
+            var varification = VerificationResource.Create(to: Phone, channel: "sms", pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742");
+            object res2 = new
+            {
+                message = "Sent!"
+            };
+            return res2;
+        }
+        object res = new
+        {
+            message = "This phone number is not registered to any user!"
+        };
+        return res;
+    }
+    public object VerifyCode(string phone, string code)
+    {
+        TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
+        var verificationCheck = VerificationCheckResource.Create(
+            to: phone,
+            code: code,
+            pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742"
+        );
+        object res = new
+        {
+            message = verificationCheck.Status
+        };
+        return res;
+    }
+    public bool DoesPhoneExist(string Phone)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@PhoneNumber", Phone);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_PhoneExists", con, paramDic);
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                int NumberExists = Convert.ToInt32(dataReader["PhoneExists"]);
+                return NumberExists > 0;
+            }
+            throw new Exception("Server Error");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+    public object GetUserPhoneNumber(int UserID)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserPhone", con, paramDic);             // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                string Number = dataReader["PhoneNumber"].ToString();
+                if (Number.Contains('-'))
+                    Number = null;
+                object res = new
+                {
+                    PhoneNumber = Number
                 };
                 return res;
             }
@@ -3371,6 +3670,71 @@ public class DBservices
 
 
         cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserByEmail", con, paramDic);             // create the command
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                User u = new User();
+                u.Email = dataReader["UserEmail"].ToString();
+                u.Password = dataReader["UserPassword"].ToString();
+                u.Name = dataReader["UserName"].ToString();
+                u.Id = Convert.ToInt32(dataReader["UserID"]);
+                u.IsBanned = Convert.ToInt32(dataReader["IsBanned"]) == 1;
+                u.IsVerified = Convert.ToInt32(dataReader["UserIsVerified"]) == 1;
+                u.RegistrationDate = Convert.ToDateTime(dataReader["registrationDate"]);
+                if (!dataReader.IsDBNull(dataReader.GetOrdinal("Image")))
+                {
+                    u.Image = Convert.ToBase64String((byte[])dataReader["Image"]);
+                }
+                else
+                {
+                    u.Image = null;
+                }
+                return u;
+            }
+            throw new ArgumentException("User doesn't exist");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+    public User GetUserByPhone(string Phone)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@PhoneNumber", Phone);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserByPhone", con, paramDic);             // create the command
 
 
         try
