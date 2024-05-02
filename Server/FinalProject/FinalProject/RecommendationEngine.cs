@@ -75,9 +75,6 @@
         }
         private double CalculateCombinedScore(SongRecommendation Song)
         {
-            int x = 7;
-            if (Song.PerformerID == 4)
-                x = 8;
             double ReleaseYearWeight = 0.15;
             double NumOfPlaysWeight = 0.2;
             double UserLikesGenreWeight = 0.2;

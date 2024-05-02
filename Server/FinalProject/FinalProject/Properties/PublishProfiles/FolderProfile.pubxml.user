@@ -4,8 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project>
   <PropertyGroup>
-    <_PublishTargetUrl>D:\Visual Studio Projects\Ruppin Year B\ServerSide\Git\Songs\Server\FinalProject\FinalProject\bin\Release\net6.0\publish\</_PublishTargetUrl>
-    <History>True|2023-07-24T21:02:17.8712367Z;True|2023-07-24T19:44:12.5257453+02:00;True|2023-07-24T14:14:26.9057214+02:00;True|2023-07-24T14:14:19.7747818+02:00;True|2023-07-24T11:28:28.4738556+02:00;</History>
+    <_PublishTargetUrl>C:\Users\natip\react-final-project\Server\FinalProject\FinalProject\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2024-05-02T08:26:17.5647840Z;True|2023-07-25T00:02:17.8712367+03:00;True|2023-07-24T20:44:12.5257453+03:00;True|2023-07-24T15:14:26.9057214+03:00;True|2023-07-24T15:14:19.7747818+03:00;True|2023-07-24T12:28:28.4738556+03:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

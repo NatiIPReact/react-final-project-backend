@@ -318,14 +318,14 @@ namespace FinalProject.Controllers
             try
             {
                 if (Phone == "-1")
-                    return Ok(false);
+                    return Ok(new { message = "ERROR: Couldn't Update!" });
                 if (!Phone.Contains('+'))
                     Phone = "+" + Phone;
                 return Models.User.UpdateUserPhoneNumber(UserID, Phone) ? Ok(new { message = "Updated" }) : BadRequest(new { message = "Server error, please try again later" });
             }
             catch (Exception e)
             {
-                if (e.Message.Contains("UNIQUE KEY constraint"))
+                if (e.Message.Contains("duplicate"))
                     return BadRequest(new { message = "This phone is already taken" });
                 return BadRequest(new { message = e.Message });
             }
