@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\recommendationengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\recommendationengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|solutionrelative:finalproject\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FAD4D2BC-3C41-4F4C-A8BB-5F3FD0882B72}|FinalProject\\FinalProject.csproj|c:\\users\\natip\\react-final-project\\server\\finalproject\\finalproject\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -46,49 +38,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\appsettings.json",
-              "RelativeDocumentMoniker": "FinalProject\\appsettings.json",
-              "ToolTip": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\appsettings.json",
-              "RelativeToolTip": "FinalProject\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-04-24T15:24:33.636Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Program.cs",
-              "RelativeDocumentMoniker": "FinalProject\\Program.cs",
-              "ToolTip": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Program.cs",
-              "RelativeToolTip": "FinalProject\\Program.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAuwBoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T08:35:18.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "FinalProject\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Controllers\\UsersController.cs",
               "RelativeToolTip": "FinalProject\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAADgBAAAAAAAAAAAvwEkBAAA/AAAA",
+              "ViewState": "AQIAADgBAAAAAAAAAAAvwDsBAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-23T19:26:33.327Z"
+              "WhenOpened": "2024-04-23T19:26:33.327Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "SongsController.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Controllers\\SongsController.cs",
               "RelativeDocumentMoniker": "FinalProject\\Controllers\\SongsController.cs",
@@ -100,7 +67,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
               "Title": "Song.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Models\\Song.cs",
               "RelativeDocumentMoniker": "FinalProject\\Models\\Song.cs",
@@ -112,7 +79,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "Comment.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Models\\Comment.cs",
               "RelativeDocumentMoniker": "FinalProject\\Models\\Comment.cs",
@@ -124,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Models\\User.cs",
               "RelativeDocumentMoniker": "FinalProject\\Models\\User.cs",
@@ -136,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "DBservices.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\Models\\DAL\\DBservices.cs",
               "RelativeDocumentMoniker": "FinalProject\\Models\\DAL\\DBservices.cs",
@@ -148,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "RecommendationEngine.cs",
               "DocumentMoniker": "C:\\Users\\natip\\react-final-project\\Server\\FinalProject\\FinalProject\\RecommendationEngine.cs",
               "RelativeDocumentMoniker": "FinalProject\\RecommendationEngine.cs",
@@ -156,8 +123,7 @@
               "RelativeToolTip": "FinalProject\\RecommendationEngine.cs",
               "ViewState": "AQIAAEYAAAAAAAAAAAAAAEwAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-23T09:51:24.954Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-23T09:51:24.954Z"
             }
           ]
         }
