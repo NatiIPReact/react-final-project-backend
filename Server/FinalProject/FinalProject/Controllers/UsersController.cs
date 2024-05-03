@@ -455,6 +455,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPut("InitiateNewValidationIfOldInvalid")]
+        public IActionResult InitiateNewValidationIfOldInvalid(User u)
+        {
+            try
+            {
+                return u.InitiateNewValidationIfOldInvalid() ? Ok(new { sent = true }) : Ok(new { sent = false });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
         // User clicked verify on his email
         // PUT api/<UsersController>/5
         [HttpPut("ValidateEmail")]

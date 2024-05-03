@@ -200,7 +200,7 @@ namespace FinalProject.Models
         // Sends email verification request.
         async Task Execute(string Token)
         {
-            var apiKey = "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";
+            var apiKey = APIKeys.GetSendGridAPIKey();
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("csbgroup22@gmail.com", "Ruppin Music");
             var subject = "Sending with SendGrid is Fun";
@@ -308,6 +308,22 @@ namespace FinalProject.Models
             bool tmp = db.InitiateNewValidation(Id, Token) > 0;
             Execute(Token).Wait();
             return tmp;
+        }
+        public bool InitiateNewValidationIfOldInvalid()
+        {
+            if (Id < 1)
+                throw new ArgumentException("User doesn't exist");
+            DBservices db = new DBservices();
+            DateTime LastTokenDate = db.GetLastTokenDate(Id);
+            TimeSpan difference = DateTime.Now - LastTokenDate;
+            if (difference.TotalMinutes > 30)
+            {
+                string Token = GenerateToken();
+                bool tmp = db.InitiateNewValidation(Id, Token) > 0;
+                Execute(Token).Wait();
+                return tmp;
+            }
+            return false;
         }
         // Gets user favorites songs. returns List of json objects (needed because special data is used)
         public static List<object> GetUserFavorites(int UserID)

@@ -1644,6 +1644,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "InitiateNewValidationIfOldInvalid",
+    "RelativePath": "api/Users/InitiateNewValidationIfOldInvalid",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "u",
+        "Type": "FinalProject.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "Get",
     "RelativePath": "api/Users/IsUserVerified/id/{id}",
     "HttpMethod": "GET",

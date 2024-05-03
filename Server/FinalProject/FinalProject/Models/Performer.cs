@@ -104,8 +104,8 @@ namespace FinalProject.Models
 
             using (HttpClient httpClient = new HttpClient())
             {
-                // https://serpapi.com/search.json?engine=google_images&q=Coffee&google_domain=google.com&gl=us&hl=en&api_key=76b3f536a183539247991ad6bcd171924ea6741a420b32c3e5093893ace3faa6
-                string url = $"https://serpapi.com/search.json?engine=google_images&q={artistName}&gl=us&hl=en&api_key=76b3f536a183539247991ad6bcd171924ea6741a420b32c3e5093893ace3faa6";
+                // https://serpapi.com/search.json?engine=google_images&q=Coffee&google_domain=google.com&gl=us&hl=en&api_key={APIKeys.GetSerpapiKey()}
+                string url = $"https://serpapi.com/search.json?engine=google_images&q={artistName}&gl=us&hl=en&api_key={APIKeys.GetSerpapiKey()}";
                 httpClient.DefaultRequestHeaders.Add("API-Key", apiKey);
 
                 var response = await httpClient.GetAsync(url);

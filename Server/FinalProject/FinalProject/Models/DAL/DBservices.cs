@@ -1021,6 +1021,55 @@ public class DBservices
             }
         }
     }
+    public DateTime GetLastTokenDate(int UserID)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetLastTokenDate", con, paramDic);             // create the command
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                DateTime date = Convert.ToDateTime(dataReader["LastTokenTime"]);
+                return date;
+            }
+            return new DateTime(2000, 1, 1);
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
     // Gets the user XP by his id.
     public object GetUserXP(int UserID)
     {
