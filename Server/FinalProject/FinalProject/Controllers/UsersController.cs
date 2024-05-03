@@ -74,6 +74,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = "Server error " + e.Message });
             }
         }
+        [HttpGet("GetNumberOfRecentlyPlayed/UserID/{UserID}")]
+        public IActionResult GetNumberOfRecentlyPlayed(int UserID)
+        {
+            try
+            {
+                return Ok(Models.User.GetNumberOfRecentlyPlayed(UserID));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
+            }
+        }
         // Returns user information for the admin report.
         [HttpGet("LoadUserInformation")]
         public IActionResult LoadUserInformation()
@@ -330,6 +342,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPost("PostUserRecentlyPlayed/UserID/{UserID}/SongID/{SongID}")]
+        public IActionResult PostUserRecentlyPlayed(int UserID, int SongID)
+        {
+            try
+            {
+                return Models.User.PostUserRecentlyPlayed(UserID, SongID) ? Ok(new { message = "Updated" }) : BadRequest(new { message = "Server error, please try again later" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
         [HttpPut("UpdateUserExpoToken/UserID/{UserID}/ExpoToken/{ExpoToken}")]
         public IActionResult UpdateUserExpoToken(int UserID, string ExpoToken)
         {
@@ -392,6 +416,18 @@ namespace FinalProject.Controllers
             catch (Exception e)
             {
                 return BadRequest(new { message = "SERVER ERROR " + e.Message });
+            }
+        }
+        [HttpGet("GetUserSongHistory/UserID/{UserID}")]
+        public IActionResult GetUserSongHistory(int UserID)
+        {
+            try
+            {
+                return Ok(Models.User.GetUserSongHistory(UserID));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
             }
         }
         [HttpGet("GetUserPhoneNumber/UserID/{UserID}")]

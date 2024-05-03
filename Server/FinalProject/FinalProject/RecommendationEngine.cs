@@ -10,12 +10,14 @@
         private int isInFav;
         private int followingArtist;
         private int likesGenre;
+        private int recentlyPlayed;
+        private int totalLikes;
         private string songLength;
         private string performerName;
         private string performerImage;
         private string genreName;
 
-        public SongRecommendation(int songID, string songName, int numOfPlays, int performerID, int releaseYear, int inFav, int followingArtist, int likesGenre, string songLength, string performerName, string performerImage, string genreName)
+        public SongRecommendation(int songID, string songName, int numOfPlays, int performerID, int releaseYear, int inFav, int followingArtist, int likesGenre, string songLength, string performerName, string performerImage, string genreName, int recentlyPlayed, int totalLikes)
         {
             this.songID = songID;
             this.songName = songName;
@@ -29,6 +31,8 @@
             this.performerName = performerName;
             this.performerImage = performerImage;
             this.genreName = genreName;
+            this.recentlyPlayed = recentlyPlayed;
+            this.totalLikes = totalLikes;
         }
 
         public int SongID { get => songID; set => songID = value; }
@@ -43,6 +47,8 @@
         public string PerformerName { get => performerName; set => performerName = value; }
         public string PerformerImage { get => performerImage; set => performerImage = value; }
         public string GenreName { get => genreName; set => genreName = value; }
+        public int RecentlyPlayed { get => recentlyPlayed; set => recentlyPlayed = value; }
+        public int TotalLikes { get => totalLikes; set => totalLikes = value; }
     }
     public class RecommendationEngine
     {
@@ -75,13 +81,14 @@
         }
         private double CalculateCombinedScore(SongRecommendation Song)
         {
-            double ReleaseYearWeight = 0.15;
-            double NumOfPlaysWeight = 0.2;
-            double UserLikesGenreWeight = 0.2;
+            double ReleaseYearWeight = 0.05;
+            double NumOfPlaysWeight = 0.15;
+            double UserLikesGenreWeight = 0.15;
             double UserFollowsArtistWeight = 0.1;
-            double UserLikesSongWeight = 0.35;
+            double UserLikesSongWeight = 0.27;
+            double RecentlyPlayedWeight = 0.28; // Only songs that were played in the last month. Checked through the SQL's SP.
             return Song.IsInFav * UserLikesSongWeight + Song.FollowingArtist * UserFollowsArtistWeight
-                + Song.LikesGenre * UserLikesGenreWeight
+                + Song.LikesGenre * UserLikesGenreWeight + Song.RecentlyPlayed * RecentlyPlayedWeight
                 + CalculateYearScore(Song.ReleaseYear) * ReleaseYearWeight
                 + CalculatePlaysScore(Song.NumOfPlays) * NumOfPlaysWeight;
         }

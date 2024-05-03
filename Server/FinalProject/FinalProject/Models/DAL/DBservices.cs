@@ -774,6 +774,76 @@ public class DBservices
         }
 
     }
+    public List<object> GetUserSongHistory(int UserID)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetUserRecentlyPlayed", con, paramDic);             // create the command
+
+
+        List<object> songs = new List<object>();
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                int SongID = Convert.ToInt32(dataReader["SongID"]);
+                int PerformerID = Convert.ToInt32(dataReader["PerformerID"]);
+                string SName = dataReader["SongName"].ToString();
+                string PName = dataReader["PerformerName"].ToString();
+                string PImage = dataReader["PerformerImage"].ToString();
+                string GName = dataReader["GenreName"].ToString();
+                string SLength = dataReader["SongLength"].ToString();
+                if (SLength != null && SLength.Contains(' '))
+                    SLength = SLength.Substring(0, SLength.IndexOf(' '));
+                int InFav = Convert.ToInt32(dataReader["InFav"]);
+                object s = new
+                {
+                    SongID = SongID,
+                    SongName = SName,
+                    PerformerName = PName,
+                    PerformerID = PerformerID,
+                    PerformerImage = PImage,
+                    GenreName = GName,
+                    Length = SLength,
+                    IsInFav = InFav
+                };
+                songs.Add(s);
+            }
+
+            return songs;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
     public List<SongRecommendation> GetUserRecommendedSongs(int UserID, int NumberOfSongs = 15)
     {
 
@@ -805,11 +875,13 @@ public class DBservices
             {
                 int SongID = Convert.ToInt32(dataReader["SongID"]);
                 int PerformerID = Convert.ToInt32(dataReader["PerformerID"]);
+                int TotalLikes = Convert.ToInt32(dataReader["TotalLikes"]);
                 string SName = dataReader["SongName"].ToString();
                 string PName = dataReader["PerformerName"].ToString();
                 string PImage = dataReader["PerformerImage"].ToString();
                 int NumOfPlays = Convert.ToInt32(dataReader["NumOfPlays"]);
                 int ReleaseYear = Convert.ToInt32(dataReader["ReleaseYear"]);
+                int RecentlyPlayed = Convert.ToInt32(dataReader["IsInRecentlyPlayed"]);
                 string GName = dataReader["GenreName"].ToString();
                 string SLength = dataReader["SongLength"].ToString();
                 if (SLength != null && SLength.Contains(' '))
@@ -819,7 +891,7 @@ public class DBservices
                 int LikesGenre = Convert.ToInt32(dataReader["LikesGenre"]);
                 SongRecommendation s = new SongRecommendation(SongID, SName, NumOfPlays,
                     PerformerID, ReleaseYear, InFav, FollowingArtist, LikesGenre, SLength,
-                    PName, PImage, GName);
+                    PName, PImage, GName, RecentlyPlayed, TotalLikes);
                 engine.AddSong(s);
             }
             return engine.TurnonEngine(NumberOfSongs);
@@ -1356,6 +1428,66 @@ public class DBservices
                 else return new
                 {
                     TotalLikedSongs = 0
+                };
+            }
+            throw new ArgumentException("SERVER ERROR");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
+    public object GetNumberOfRecentlyPlayed(int UserID)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetNumberOfRecentlyPlayed", con, paramDic);             // create the command
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader();
+
+            while (dataReader.Read())
+            {
+                if (!dataReader.IsDBNull(dataReader.GetOrdinal("TotalRecentlyPlayed")))
+                {
+                    object res = new
+                    {
+                        TotalRecentlyPlayed = Convert.ToInt32(dataReader["TotalRecentlyPlayed"])
+                    };
+                    return res;
+                }
+                else return new
+                {
+                    TotalRecentlyPlayed = 0
                 };
             }
             throw new ArgumentException("SERVER ERROR");
@@ -2578,6 +2710,74 @@ public class DBservices
         }
 
     }
+    public List<object> GetGenreSongsWithUserData(int GenreID, int UserID)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@GenreID", GenreID);
+        paramDic.Add("@UserID", UserID);
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_GetGenreSongsWithUser", con, paramDic);             // create the command
+
+
+        List<object> songs = new List<object>();
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                int SID = Convert.ToInt32(dataReader["SongID"]);
+                string PName = dataReader["PerformerName"].ToString();
+                string PImage = dataReader["PerformerImage"].ToString();
+                string SName = dataReader["SongName"].ToString();
+                string SLength = dataReader["SongLength"].ToString();
+                if (SLength != null && SLength.Contains(' '))
+                    SLength = SLength.Substring(0, SLength.IndexOf(' '));
+                object s = new
+                {
+                    SongID = SID,
+                    PerformerName = PName,
+                    PerformerImage = PImage,
+                    SongName = SName,
+                    PerformerID = Convert.ToInt32(dataReader["PerformerID"]),
+                    Length = SLength,
+                    IsInFav = Convert.ToInt32(dataReader["InFav"])
+                };
+                songs.Add(s);
+            }
+
+            return songs;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
 
     // Gets the most played song to feature on our homepage. Returns as an object to insert special data for this request. (such as image)
     public object GetMostPlayedTrack()
@@ -2774,6 +2974,51 @@ public class DBservices
 
 
         cmd = CreateCommandWithStoredProcedure("Proj_SP_PostUserAnswer", con, paramDic);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            // int numEffected = Convert.ToInt32(cmd.ExecuteScalar()); // returning the id
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    public int PostUserRecentlyPlayed(int UserID, int SongID)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@UserID", UserID);
+        paramDic.Add("@SongID", SongID);
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_PostUserRecentlyPlayed", con, paramDic);             // create the command
 
         try
         {

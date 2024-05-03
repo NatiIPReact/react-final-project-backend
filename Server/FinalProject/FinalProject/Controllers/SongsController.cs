@@ -140,6 +140,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = "Server error " + e.Message });
             }
         }
+        [HttpGet("GetGenreSongsWithUserData/GenreID/{GenreID}/UserID/{UserID}")]
+        public IActionResult GetGenreSongsWithUserData(int GenreID, int UserID)
+        {
+            try
+            {
+                return Ok(Song.GetGenreSongsWithUserData(GenreID, UserID));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "Server error " + e.Message });
+            }
+        }
         [HttpGet("GetSongMSDuration/SongID/{SongID}")]
         public IActionResult GetSongMSDuration(int SongID)
         {

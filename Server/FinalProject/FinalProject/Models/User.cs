@@ -97,6 +97,11 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetUserByEmail(email);
         }
+        public static List<object> GetUserSongHistory(int UserID)
+        {
+            DBservices db = new DBservices();
+            return db.GetUserSongHistory(UserID);
+        }
         public static User GetUserByPhone(string phone)
         {
             DBservices db = new DBservices();
@@ -141,6 +146,11 @@ namespace FinalProject.Models
         {
             DBservices db = new DBservices();
             return db.PutUserPhone(UserID, PhoneNumber) > 0;
+        }
+        public static bool PostUserRecentlyPlayed(int UserID, int SongID)
+        {
+            DBservices db = new DBservices();
+            return db.PostUserRecentlyPlayed(UserID, SongID) > 0;
         }
         public static object GetUserPhoneNumber(int UserID)
         {
@@ -309,6 +319,11 @@ namespace FinalProject.Models
         {
             DBservices db = new DBservices();
             return db.GetNumberOfLikedSongs(UserID);
+        }
+        public static object GetNumberOfRecentlyPlayed(int UserID)
+        {
+            DBservices db = new DBservices();
+            return db.GetNumberOfRecentlyPlayed(UserID);
         }
         // Posts a new song to user favorites
         public static object PostUserFavorite(int UserID, int SongID)

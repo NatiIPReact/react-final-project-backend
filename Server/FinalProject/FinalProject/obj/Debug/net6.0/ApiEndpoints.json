@@ -1028,6 +1028,27 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.SongsController",
+    "Method": "GetGenreSongsWithUserData",
+    "RelativePath": "api/Songs/GetGenreSongsWithUserData/GenreID/{GenreID}/UserID/{UserID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "GenreID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.SongsController",
     "Method": "GetMostPlayedTrack",
     "RelativePath": "api/Songs/GetMostPlayedTrack",
     "HttpMethod": "GET",
@@ -1463,6 +1484,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetNumberOfRecentlyPlayed",
+    "RelativePath": "api/Users/GetNumberOfRecentlyPlayed/UserID/{UserID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetUserByEmail",
     "RelativePath": "api/Users/GetUserByEmail/email/{email}",
     "HttpMethod": "GET",
@@ -1545,6 +1582,22 @@
     "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetUserRegistrationDate",
     "RelativePath": "api/Users/GetUserRegistrationDate/UserID/{UserID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetUserSongHistory",
+    "RelativePath": "api/Users/GetUserSongHistory/UserID/{UserID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1656,6 +1709,27 @@
     "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "PostUserFavorite",
     "RelativePath": "api/Users/PostUserFavorite/UserID/{UserID}/SongID/{SongID}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "SongID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "PostUserRecentlyPlayed",
+    "RelativePath": "api/Users/PostUserRecentlyPlayed/UserID/{UserID}/SongID/{SongID}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

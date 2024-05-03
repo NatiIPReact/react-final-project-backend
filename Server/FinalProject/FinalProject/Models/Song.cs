@@ -141,6 +141,11 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetGenreSongs(GID);
         }
+        public static List<object> GetGenreSongsWithUserData(int GID, int UID)
+        {
+            DBservices db = new DBservices();
+            return db.GetGenreSongsWithUserData(GID, UID);
+        }
         // Initiates the search query. object because we a special json with more data.
         public static List<object> Search(string query, int UserID)
         {

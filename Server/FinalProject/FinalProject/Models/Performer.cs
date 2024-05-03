@@ -100,7 +100,7 @@ namespace FinalProject.Models
         // Used only on swagger. # of requests is limited.
         public async static Task<string> InsertArtistWithAPIImage(string artistName)
         {
-            string apiKey = "76b3f536a183539247991ad6bcd171924ea6741a420b32c3e5093893ace3faa6";
+            string apiKey = APIKeys.GetSendGridAPIKey();
 
             using (HttpClient httpClient = new HttpClient())
             {
