@@ -3322,8 +3322,8 @@ public class DBservices
                 string Number = dataReader["PhoneNumber"].ToString();
                 if (!Number.Contains('-'))
                 {
-                    TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
-                    var varification = VerificationResource.Create(to: Number, channel: "sms", pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742");
+                    TwilioClient.Init(APIKeys.GetTwilioAccountSID(), APIKeys.GetTwilioAuthToken());
+                    var varification = VerificationResource.Create(to: Number, channel: "sms", pathServiceSid: APIKeys.GetTwilioPathServiceID());
                     return "Sent!";
                 }
             }
@@ -3348,8 +3348,8 @@ public class DBservices
     {
         if (DoesPhoneExist(Phone))
         {
-            TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
-            var varification = VerificationResource.Create(to: Phone, channel: "sms", pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742");
+            TwilioClient.Init(APIKeys.GetTwilioAccountSID(), APIKeys.GetTwilioAuthToken());
+            var varification = VerificationResource.Create(to: Phone, channel: "sms", pathServiceSid: APIKeys.GetTwilioPathServiceID());
             object res2 = new
             {
                 message = "Sent!"
@@ -3364,11 +3364,11 @@ public class DBservices
     }
     public object VerifyCode(string phone, string code)
     {
-        TwilioClient.Init("AC6dd416685ea04769d8f395daccb13a2c", "f3c12d6e73aeae8d0463cc1b7a4cc976");
+        TwilioClient.Init(APIKeys.GetTwilioAccountSID(), APIKeys.GetTwilioAuthToken());
         var verificationCheck = VerificationCheckResource.Create(
             to: phone,
             code: code,
-            pathServiceSid: "VA5d949d9f67440cb2d2051f27e0c6b742"
+            pathServiceSid: APIKeys.GetTwilioPathServiceID()
         );
         object res = new
         {
