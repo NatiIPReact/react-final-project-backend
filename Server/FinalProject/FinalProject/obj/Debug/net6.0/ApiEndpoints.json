@@ -609,6 +609,27 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.PlaylistsController",
+    "Method": "EditPlaylistName",
+    "RelativePath": "api/Playlists/EditPlaylistName/PlaylistID/{PlaylistID}/PlaylistName/{PlaylistName}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PlaylistID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "PlaylistName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.PlaylistsController",
     "Method": "GetPlaylistName",
     "RelativePath": "api/Playlists/GetPlaylistName/PlaylistID/{PlaylistID}",
     "HttpMethod": "GET",
@@ -1458,6 +1479,27 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "GetLastPositionInSong",
+    "RelativePath": "api/Users/GetLastPositionInSong/UserID/{UserID}/SongID/{SongID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "SongID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "GetLeaderboard",
     "RelativePath": "api/Users/GetLeaderboard",
     "HttpMethod": "GET",
@@ -1874,6 +1916,32 @@
       {
         "Name": "Phone",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "UpdateUserPositionInSong",
+    "RelativePath": "api/Users/UpdateUserPositionInSong/UserID/{UserID}/SongID/{SongID}/Position/{Position}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "SongID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "Position",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

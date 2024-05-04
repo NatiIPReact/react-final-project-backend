@@ -62,6 +62,15 @@
             DBservices db = new DBservices();
             return db.DeleteSongFromPlaylist(PlaylistID, SongID) > 0;
         }
+        public static bool EditPlaylistName(int PlaylistID, string Name)
+        {
+            if (PlaylistID < 1)
+                throw new ArgumentException("This playlist doesn't exist");
+            if (Name == null || Name == "")
+                throw new ArgumentException("The playlist's name cannot be empty");
+            DBservices db = new DBservices();
+            return db.EditPlaylistName(PlaylistID, Name) > 0;
+        }
         // Gets all the songs in the playlist. object is used because we'd like to return more data. (such as performer name, image, etc..)
         public static List<object> GetPlaylistSongs(int PlaylistID)
         {

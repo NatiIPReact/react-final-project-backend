@@ -107,6 +107,16 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetUserByPhone(phone);
         }
+        public static ulong GetLastPositionInSong(int UserID, int SongID)
+        {
+            DBservices db = new DBservices();
+            return db.GetLastPositionInSong(UserID, SongID);
+        }
+        public static bool UpdateUserPositionInSong(int UserID, int SongID, int Position)
+        {
+            DBservices db = new DBservices();
+            return db.UpdateUserPositionInSong(UserID, SongID, Position) > 0;
+        }
 
         // Inserts a new user into the user table. Initiates email verification.
         public bool Insert()

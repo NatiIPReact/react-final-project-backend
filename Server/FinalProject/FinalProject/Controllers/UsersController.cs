@@ -324,6 +324,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPut("UpdateUserPositionInSong/UserID/{UserID}/SongID/{SongID}/Position/{Position}")]
+        public IActionResult UpdateUserPositionInSong(int UserID, int SongID, int Position)
+        {
+            try
+            {
+                return Models.User.UpdateUserPositionInSong(UserID, SongID, Position) ? Ok(new { message = "Updated" }) : BadRequest(new { message = "Server error, please try again later" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
         [HttpPut("UpdateUserPhone/UserID/{UserID}/Phone/{Phone}")]
         public IActionResult Put(int UserID, string Phone)
         {
@@ -412,6 +424,19 @@ namespace FinalProject.Controllers
             try
             {
                 return Ok(Models.User.GetLeaderboard());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "SERVER ERROR " + e.Message });
+            }
+        }
+        [HttpGet("GetLastPositionInSong/UserID/{UserID}/SongID/{SongID}")]
+        public IActionResult GetLastPositionInSong(int UserID, int SongID)
+        {
+            try
+            {
+                ulong PositionInSong = Models.User.GetLastPositionInSong(UserID, SongID);
+                return Ok(new { Position = PositionInSong });
             }
             catch (Exception e)
             {

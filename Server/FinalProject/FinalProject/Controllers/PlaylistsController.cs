@@ -76,6 +76,18 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = "SERVER ERROR " + e.Message });
             }
         }
+        [HttpPut("EditPlaylistName/PlaylistID/{PlaylistID}/PlaylistName/{PlaylistName}")]
+        public IActionResult EditPlaylistName(int PlaylistID, string PlaylistName)
+        {
+            try
+            {
+                return Playlist.EditPlaylistName(PlaylistID, PlaylistName) ? Ok(new { message = "Success!" }) : BadRequest(new { message = "SERVER ERROR" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = "SERVER ERROR " + e.Message });
+            }
+        }
 
         // Delets the whole playlist of a user.
         // DELETE api/<PlaylistsController>/5
