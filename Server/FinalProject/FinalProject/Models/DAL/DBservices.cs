@@ -98,6 +98,51 @@ public class DBservices
         }
 
     }
+    public int UpdateUserPasswordByEmail(string email, string password)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@email", email);
+        paramDic.Add("@password", password);
+
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_UpdatePasswordByEmail", con, paramDic);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
     public int UpdateExpoToken(int UserID, string NewExpoToken)
     {
 
@@ -5034,6 +5079,43 @@ public class DBservices
             }
         }
     }
+    public int UserForgotPassword(string UserEmail, int Code)
+    {
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@email", UserEmail);
+        paramDic.Add("@code", Code);
+
+
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_UserForgotPassword", con, paramDic);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+    }
     // Adds a song without the mp3 file data.
     public int PostSongDataWithoutFile(Song song)
     {
@@ -5107,6 +5189,56 @@ public class DBservices
             while (dataReader.Read())
             {
                 return Convert.ToInt32(dataReader["CurrentID"]);
+            }
+            throw new Exception("DB ERROR");
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
+    public int VerifyCode(string email, int code)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("FinalProject"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        Dictionary<string, object> paramDic = new Dictionary<string, object>();
+        paramDic.Add("@email", email);
+        paramDic.Add("@code", code);
+
+        cmd = CreateCommandWithStoredProcedure("Proj_SP_VerifyCode", con, paramDic);             // create the command
+
+
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                return Convert.ToInt32(dataReader["CodeRight"]);
             }
             throw new Exception("DB ERROR");
         }

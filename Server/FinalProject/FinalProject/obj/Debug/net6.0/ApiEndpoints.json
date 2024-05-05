@@ -1902,6 +1902,27 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "UpdateUserPasswordByEmail",
+    "RelativePath": "api/Users/UpdateUserPasswordByEmail/UserEmail/{UserEmail}/Password/{Password}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserEmail",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "Password",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "Put",
     "RelativePath": "api/Users/UpdateUserPhone/UserID/{UserID}/Phone/{Phone}",
     "HttpMethod": "PUT",
@@ -1949,6 +1970,22 @@
   },
   {
     "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "UserForgotPassword",
+    "RelativePath": "api/Users/UserForgotPassword",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "u",
+        "Type": "FinalProject.Models.User",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
     "Method": "Put",
     "RelativePath": "api/Users/ValidateEmail",
     "HttpMethod": "PUT",
@@ -1984,6 +2021,27 @@
       {
         "Name": "Code",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FinalProject.Controllers.UsersController",
+    "Method": "VerifyResetPasswordCode",
+    "RelativePath": "api/Users/VerifyResetPasswordCode/UserEmail/{UserEmail}/Code/{Code}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserEmail",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "Code",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

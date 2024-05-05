@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Twilio;
 using Twilio.Rest.Verify.V2.Service;
 using System.Numerics;
+using Twilio.Jwt.AccessToken;
 
 namespace FinalProject.Models
 {
@@ -175,6 +176,30 @@ namespace FinalProject.Models
             DBservices db = new DBservices();
             return db.GetUserFollowingList(UserID);
         }
+        public bool UserForgotPassword()
+        {
+            Random rand = new Random();
+            int code = rand.Next(100000, 999999);
+            DBservices db = new DBservices();
+            bool changed = db.UserForgotPassword(this.Email, code) > 0;
+            if (!changed) throw new ArgumentException("This account doesn't exist!");
+            Execute(code).Wait();
+            return changed;
+        }
+        public static object VerifyCode(string email, int code)
+        {
+            DBservices db = new DBservices();
+            if (db.VerifyCode(email, code) == 1)
+            {
+                return new { correct=true };
+            }
+            return new { correct = false };
+        }
+        public static bool UpdateUserPasswordByEmail(string email, string password)
+        {
+            DBservices db = new DBservices();
+            return db.UpdateUserPasswordByEmail(email, password) > 0;
+        }
         // returns true if this user is verified
         public static bool IsUserVerified(int id)
         {
@@ -226,6 +251,30 @@ namespace FinalProject.Models
               { "name", dynamicName },
               { "token", Token },
               { "email", email }
+               // Add other dynamic data fields and their values as needed
+            };
+
+            var msg = MailHelper.CreateSingleTemplateEmail(from, to, templateId, dynamicTemplateData: dynamicData);
+            msg.Subject = subject;
+
+            var response = await client.SendEmailAsync(msg);
+        }
+        async Task Execute(int code)
+        {
+            var apiKey = APIKeys.GetSendGridAPIKey();
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("csbgroup22@gmail.com", "Ruppin Music");
+            var subject = "Sending with SendGrid is Fun";
+            var to = new EmailAddress(Email, "User: " + Name);
+            var templateId = "d-76f08243f5bf402fa18d93fb0d73a90d";
+
+            /*string dynamicName = name;
+            if (name.Contains(" "))
+                dynamicName = name.Split(' ')[0];*/
+
+            var dynamicData = new Dictionary<string, dynamic>
+            {
+              { "code", code }
                // Add other dynamic data fields and their values as needed
             };
 

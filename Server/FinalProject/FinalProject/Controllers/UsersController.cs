@@ -480,6 +480,42 @@ namespace FinalProject.Controllers
                 return BadRequest(new { message = e.Message });
             }
         }
+        [HttpPut("UserForgotPassword")]
+        public IActionResult UserForgotPassword(User u)
+        {
+            try
+            {
+                return Ok(u.UserForgotPassword());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpGet("VerifyResetPasswordCode/UserEmail/{UserEmail}/Code/{Code}")]
+        public IActionResult VerifyResetPasswordCode(string UserEmail, int Code)
+        {
+            try
+            {
+                return Ok(Models.User.VerifyCode(UserEmail, Code));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
+        [HttpPut("UpdateUserPasswordByEmail/UserEmail/{UserEmail}/Password/{Password}")]
+        public IActionResult UpdateUserPasswordByEmail(string UserEmail, string Password)
+        {
+            try
+            {
+                return Models.User.UpdateUserPasswordByEmail(UserEmail, Password) ? Ok(new { message = "Updated!" }) : BadRequest(new { message = "This user doesn't exist!" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { message = e.Message });
+            }
+        }
         [HttpPut("InitiateNewValidationIfOldInvalid")]
         public IActionResult InitiateNewValidationIfOldInvalid(User u)
         {
